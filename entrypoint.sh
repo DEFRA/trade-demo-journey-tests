@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "run_id: $RUN_ID"
-npm test
+npm run test
 
 npm run report:publish
 publish_exit_code=$?
