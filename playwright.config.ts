@@ -6,9 +6,9 @@ export default defineConfig({
   testDir: './tests',
   testMatch: /.*\.spec\.ts/,
   fullyParallel: true,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 4 : undefined, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
-  reporter: process.env.CI ? [['junit', { outputFile: 'test-results/junit.xml' }], ['html'], ['allure-playwright']] : 'html',
+  retries: 2,
+  workers: 4, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
+  reporter: [['list'], ['allure-playwright']],
   timeout: 5 * 60 * 1000, // Adjust based on E2E test duration (default: 30s, adjusted to 5m)
   expect: {
     timeout: 5 * 1000, // Adjust based on element appearance speed (default: 5s)
