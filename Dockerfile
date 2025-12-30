@@ -1,11 +1,30 @@
-# Playwright official image (includes browsers + system deps)
-FROM mcr.microsoft.com/playwright:v1.48.2-jammy
+FROM node:20-alpine
 
 ENV TZ="Europe/London"
 
-USER root
+# Prevent Playwright from downloading its own Chromium
+ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+ENV PLAYWRIGHT_BROWSERS_PATH=0
+ENV CHROMIUM_PATH=/usr/bin/chromium-browser
+ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/lib/chromium/chromium
+ENV HEADLESS=true
 
+USER root
 WORKDIR /app
+
+
+RUN apk add --no-cache \
+  openjdk17-jre-headless \
+  curl \
+  aws-cli \
+  chromium \
+  nss \
+  freetype \
+  harfbuzz \
+  ca-certificates \
+  ttf-freefont \
+  udev \
+  bash
 
 # Copy dependency manifests first for better layer caching
 COPY package*.json ./
@@ -14,7 +33,6 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npm install
 
 # (Optional) ensure browsers are installed (usually already in the base image)
 # RUN npx playwright install --with-deps
