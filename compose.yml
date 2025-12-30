@@ -23,9 +23,17 @@ services:
 # Headless browser, used by the test suite to actually run the tests against the
 # containers.
   selenium-chrome:
-    image: selenium/standalone-chrome:123.0
-    ports:
-      - 4444:4444
+    image: mcr.microsoft.com/playwright:v1.48.2-jammy
+    working_dir: /app
+    volumes:
+      - ./:/app
+      - ./allure-report:/app/allure-report
+    command: >
+      bash -lc "
+        npm ci &&
+        npx playwright test &&
+        npx allure generate allure-results --clean -o allure-report
+      "
 
 ################################################################################
 #  mongodb:
