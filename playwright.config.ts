@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = `https://trade-demo-frontend.dev.cdp-int.defra.cloud`;
+const baseURL = process.env.BASE_URL;
 
 export default defineConfig({
   testDir: './tests',
@@ -8,16 +8,23 @@ export default defineConfig({
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 4 : undefined, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
-  reporter: [['html'], ['allure-playwright']],
+  reporter: [
+    [
+      'allure-playwright',
+      {
+        resultsDir: 'allure-results',
+      },
+    ],
+  ],
   timeout: 5 * 60 * 1000, // Adjust based on E2E test duration (default: 30s, adjusted to 5m)
   expect: {
     timeout: 5 * 1000, // Adjust based on element appearance speed (default: 5s)
   },
   use: {
     baseURL,
-    headless: true,
+    headless: false,
     browserName: 'chromium',
-    trace: 'on-first-retry', // Adjust based on trace recording needs (default: 'off', adjusted to 'on-first-retry')
+    trace: 'on-first-retry', // Adjust based on trace recording needs (dfault: 'off', adjusted to 'on-first-retry')
     screenshot: 'only-on-failure', // Adjust based on screenshot needs (default: 'off', adjusted to 'only-on-failure')
     video: 'off', // Adjust based on video recording needs (default: 'off')
     viewport: { width: 1280, height: 720 },

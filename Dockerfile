@@ -1,4 +1,10 @@
+# Multi-stage build: Extract ZAP from official image
+FROM ghcr.io/zaproxy/zaproxy:stable AS zap-source
+
 FROM node:20-alpine
+
+# Copy ZAP from the official image
+COPY --from=zap-source /zap /zap
 
 ENV TZ="Europe/London"
 
@@ -36,6 +42,18 @@ COPY . .
 
 # (Optional) ensure browsers are installed (usually already in the base image)
 # RUN npx playwright install --with-deps
+#ENV BINARY_PATH=/root/.browserstack/BrowserStackLocal
+#ENV BROWSERSTACK_LOCAL_BINARY=/root/.browserstack/BrowserStackLocal
+#RUN mkdir -p /root/.browserstack
+
+ENV BROWSERSTACK_LOCAL_BINARY=/root/.browserstack/BrowserStackLocal
+ADD https://dnd2hcwqjlbad.cloudfront.net/binaries/release/latest_unzip/BrowserStackLocal-linux-x64 /root/.browserstack/BrowserStackLocal
+#RUN chmod +x /root/.browserstack/BrowserStackLocal
+RUN mkdir -p /root/.browserstack && \
+    curl -L -o /root/.browserstack/BrowserStackLocal \
+      https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64 && \
+    chmod +x /root/.browserstack/BrowserStackLocal
+
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 
