@@ -1,0 +1,44 @@
+userName: ${BROWSERSTACK_USER}
+accessKey: ${BROWSERSTACK_KEY}
+
+framework: playwright
+
+projectName: Trade Demo Journey Test Suite
+buildName: Trade Demo
+buildIdentifier: '#${DATE_TIME}'
+
+run_settings:
+  playwright_config_file: playwright.config.ts
+  node_version: 20
+
+platforms:
+  - os: OS X
+    osVersion: Tahoe
+    browserName: chrome
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: osx:chrome
+  - os: OS X
+    osVersion: Tahoe
+    browserName: playwright-webkit
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: osx:webkit
+  - os: OS X
+    osVersion: Tahoe
+    browserName: playwright-firefox
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: osx:firefox
+
+browserstackLocal: true
+browserStackLocalOptions:
+  forceLocal: false
+  binarypath: '/root/.browserstack/BrowserStackLocal'
+  onlyAutomate: true
+  proxyHost: localhost
+  proxyPort: 3128
+
+acceptSslCerts: true
+
+idleTimeout: 700

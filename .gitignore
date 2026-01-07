@@ -6,6 +6,7 @@ npm-debug.log
 coverage
 .cache
 .png
+.log
 allure-report/
 allure-results/
 FAILED
@@ -50,3 +51,4 @@ coverage/
 tmp/
 temp/
 *.tmp
+log/
