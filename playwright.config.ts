@@ -5,9 +5,9 @@ const baseURL = process.env.BASE_URL;
 export default defineConfig({
   testDir: './tests',
   testMatch: /.*\.spec\.ts/,
-  fullyParallel: true,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 4 : undefined, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
+  fullyParallel: false,
+  retries: 2,
+  workers: 1, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
   reporter: [
     [
       'allure-playwright',
