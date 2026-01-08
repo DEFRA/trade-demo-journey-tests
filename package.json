@@ -41,7 +41,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "browserstack-local": "^1.5.8",
-    "browserstack-node-sdk": "^1.48.1",
+    "browserstack-node-sdk": "^1.49.0",
     "allure-commandline": "2.32.0",
     "esm-module-alias": "2.2.1",
     "global-agent": "3.0.0",

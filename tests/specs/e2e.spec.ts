@@ -11,6 +11,7 @@ test.describe('TradeDemoFrontend Journey Test Suite', () => {
     if (newRegistrationLink != null) {
       await newRegistrationLink.click();
     }
+    const regUserId = await pages.signUpPage.regUserId.inputValue();
 
     const email = getEmail();
     await pages.signUpPage.signUpUser(email, 'testFN', 'testLN');
@@ -53,6 +54,14 @@ test.describe('TradeDemoFrontend Journey Test Suite', () => {
     const reviewPageTitle = await pages.reviewPage.pageTitle.innerText();
     expect(reviewPageTitle).toEqual('Check your answers before submitting');
     // await pages.reviewPage.reviewAndSubmit(); // Imports-proxy dependency
+
+    // signOut the user
+    await pages.signinPage.signOut();
+
+    // Expire created user
+    await pages.homePage.homePage.goto('/');
+    await pages.homePage.clickDashboardBtn();
+    await pages.signinPage.expireUser(email, regUserId);
   });
 });
 

@@ -37,6 +37,5 @@ export class HomePage {
   async signInPage(): Promise<void> {
     await this.homePage.goto('/');
     await this.dashboardBtn.click();
-    await this.homePage.waitForTimeout(300);
   }
 }

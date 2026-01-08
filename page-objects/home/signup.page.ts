@@ -10,12 +10,14 @@ export class SignupPage {
   readonly enrolmentRequestCount: Locator;
   readonly submitBtn: Locator;
   readonly newRegistrationLink: Locator;
+  readonly regUserId: Locator;
 
   constructor(page: Page) {
     this.signUpPage = page;
 
     this.signUpPageTitle = this.signUpPage.locator('span[data-testid="app-heading-caption"]');
     this.email = this.signUpPage.locator('input[id="email"]');
+    this.regUserId = this.signUpPage.locator('input[id="userId"]');
     this.firstName = this.signUpPage.locator('input[id="firstName"]');
     this.lastName = this.signUpPage.locator('input[id="lastName"]');
     this.noOfEnrollments = this.signUpPage.locator('input[id="enrolmentCount"]');
@@ -36,7 +38,6 @@ export class SignupPage {
     await this.noOfEnrollments.fill('1');
     await this.enrolmentRequestCount.fill('1');
     await this.submitBtn.click();
-    await this.signUpPage.waitForTimeout(200);
   }
 
   newRegistration() {
