@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.BASE_URL;
+const baseURL = 'https://trade-demo-frontend.dev.cdp-int.defra.cloud';
 
 export default defineConfig({
   testDir: './tests',
