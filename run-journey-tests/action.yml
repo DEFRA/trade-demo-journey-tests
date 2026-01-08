@@ -39,7 +39,7 @@ runs:
       env:
         CHROMEDRIVER_URL: localhost
       run: |
-        npm run test:github
+        npm run test:browserstack
         npm run report
     - name: debug
       if: always()
