@@ -3,8 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 const baseURL = 'https://trade-demo-frontend.dev.cdp-int.defra.cloud';
 
 export default defineConfig({
-  testDir: './tests',
-  testMatch: /.*\.spec\.ts/,
+  testDir: './tests/specs',
+  testMatch: '**/*.ts',
   fullyParallel: false,
   retries: 2,
   workers: 1, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
@@ -22,7 +22,7 @@ export default defineConfig({
   },
   use: {
     baseURL,
-    headless: false,
+    headless: true,
     browserName: 'chromium',
     trace: 'on-first-retry', // Adjust based on trace recording needs (dfault: 'off', adjusted to 'on-first-retry')
     screenshot: 'only-on-failure', // Adjust based on screenshot needs (default: 'off', adjusted to 'only-on-failure')
