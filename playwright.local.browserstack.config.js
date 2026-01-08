@@ -5,6 +5,6 @@ export default defineConfig({
   ...baseConfig,
   use: {
     ...baseConfig.use,
-    baseURL: process.env.BASE_URL || 'http://host.docker.internal:3000',
+    baseURL: process.env.BASE_URL || 'https://trade-demo-frontend.dev.cdp-int.defra.cloud',
   },
 });

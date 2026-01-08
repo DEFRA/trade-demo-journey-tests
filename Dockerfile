@@ -1,64 +1,47 @@
 # Multi-stage build: Extract ZAP from official image
 FROM ghcr.io/zaproxy/zaproxy:stable AS zap-source
 
-FROM node:20-alpine
+# Main build stage
+FROM node:20-bookworm
+
+ENV TZ="Europe/London"
+
+USER root
+
+#RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.list \
+# && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -qq \
+    && apt-get install -qqy curl zip openjdk-17-jre-headless ca-certificates \
+        fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libcups2 \
+        libdbus-1-3 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libx11-6 libx11-xcb1 \
+        libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxrandr2 libxrender1 \
+        libxshmfence1 libxss1 libxtst6 xdg-utils \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf awscliv2.zip aws \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy ZAP from the official image
 COPY --from=zap-source /zap /zap
 
-ENV TZ="Europe/London"
-
-# Prevent Playwright from downloading its own Chromium
-ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-ENV PLAYWRIGHT_BROWSERS_PATH=0
-ENV CHROMIUM_PATH=/usr/bin/chromium-browser
-ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/lib/chromium/chromium
-ENV HEADLESS=true
-
-USER root
 WORKDIR /app
 
+# Copy package files first for better Docker layer caching
+COPY package*.json .
+RUN npm install
 
-RUN apk add --no-cache \
-  openjdk17-jre-headless \
-  curl \
-  aws-cli \
-  chromium \
-  nss \
-  freetype \
-  harfbuzz \
-  ca-certificates \
-  ttf-freefont \
-  udev \
-  bash
+# Install Playwright browsers after npm install to ensure version compatibility
+RUN npx playwright install
 
-# Copy dependency manifests first for better layer caching
-COPY package*.json ./
-
-# Install Node deps
-RUN npm ci
-
+# Copy the rest of the test code
 COPY . .
 
-# (Optional) ensure browsers are installed (usually already in the base image)
-# RUN npx playwright install --with-deps
-#ENV BINARY_PATH=/root/.browserstack/BrowserStackLocal
-#ENV BROWSERSTACK_LOCAL_BINARY=/root/.browserstack/BrowserStackLocal
-#RUN mkdir -p /root/.browserstack
-
-ENV BROWSERSTACK_LOCAL_BINARY=/root/.browserstack/BrowserStackLocal
 ADD https://dnd2hcwqjlbad.cloudfront.net/binaries/release/latest_unzip/BrowserStackLocal-linux-x64 /root/.browserstack/BrowserStackLocal
-#RUN chmod +x /root/.browserstack/BrowserStackLocal
-RUN mkdir -p /root/.browserstack && \
-    curl -L -o /root/.browserstack/BrowserStackLocal \
-      https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64 && \
-    chmod +x /root/.browserstack/BrowserStackLocal
-#RUN ls -la /root/.browserstack/BrowserStackLocal \
-#    /root/.browserstack/BrowserStackLocal --version || true
-
-
+RUN chmod +x /root/.browserstack/BrowserStackLocal
 
 ENTRYPOINT [ "./entrypoint.sh" ]
-
 
 # This is downloading the linux amd64 aws cli. For M1 macs build and run with the --platform=linux/amd64 argument. eg docker build . --platform=linux/amd64
