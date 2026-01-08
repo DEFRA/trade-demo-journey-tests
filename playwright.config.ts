@@ -13,13 +13,13 @@ export default defineConfig({
     [
       'allure-playwright',
       {
-        resultsDir: 'allure-results'
-      }
-    ]
+        resultsDir: 'allure-results',
+      },
+    ],
   ],
   use: {
     baseURL: 'https://trade-demo-frontend.dev.cdp-int.defra.cloud',
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
   },
 
   projects: [
@@ -27,12 +27,12 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-      }
-    }
+      },
+    },
   ],
 
   timeout: 600000,
   expect: {
-    timeout: 30000
-  }
-})
+    timeout: 30000,
+  },
+});
