@@ -9,6 +9,7 @@ export class SigninPage {
   readonly pageTitle: Locator;
   readonly table: Locator;
   readonly signInLink: Locator;
+  readonly expireLink: Locator;
 
   constructor(page: Page) {
     this.signPage = page;
@@ -16,6 +17,7 @@ export class SigninPage {
     this.pageTitle = this.signPage.locator('table', { hasText: 'Registered Users' });
     this.table = this.signPage.locator('table');
     this.signInLink = this.signPage.locator('a', { hasText: 'Log in' });
+    this.expireLink = this.signPage.locator('a', { hasText: 'Expire' });
   }
 
   async signIn(email: string) {
@@ -35,6 +37,28 @@ export class SigninPage {
 
       await this.signPage.locator(`a[href="${loginLink}"]`).click();
     }
-    await this.signPage.waitForTimeout(300);
+  }
+
+  async signOut() {
+    await this.signPage.locator('a', { hasText: 'Sign out' }).click();
+  }
+
+  async expireUser(email: string, regUserId: string) {
+    const titleTxt = await this.table.locator('caption').allInnerTexts();
+    expect(titleTxt).not.toBeNull();
+    expect(titleTxt).toEqual(['Registered users']);
+
+    const cells = await this.table.locator('th').allInnerTexts();
+    const matchedUser = cells.filter((item) => item.includes(email));
+
+    expect(matchedUser.length).toBeGreaterThan(0);
+    expect(matchedUser).toEqual([email]);
+
+    if (matchedUser) {
+      const hrefs = await this.signPage.locator('table a[href]').evaluateAll((links) => links.map((a) => a.getAttribute('href')));
+
+      const expireLink = hrefs.filter((link) => link?.match(regUserId));
+      await this.signPage.locator(`a[href="${expireLink}"]`).click();
+    }
   }
 }

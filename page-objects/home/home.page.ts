@@ -17,7 +17,7 @@ export class HomePage {
     this.dashboardBtn = this.homePage.getByRole('button', { name: 'dashboard' });
   }
 
-  async openHomePage(HOME_PAGE: string): Promise<void> {
+  async openHomePage(HOME_PAGE: string) {
     await this.homePage.goto(HOME_PAGE);
 
     const title = await this.title.innerText();
@@ -37,6 +37,5 @@ export class HomePage {
   async signInPage(): Promise<void> {
     await this.homePage.goto('/');
     await this.dashboardBtn.click();
-    await this.homePage.waitForTimeout(300);
   }
 }
