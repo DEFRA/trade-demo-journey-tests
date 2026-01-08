@@ -12,4 +12,5 @@ global.GLOBAL_AGENT.HTTP_PROXY = 'http://localhost:3128';
 
 export default defineConfig({
   ...baseConfig,
+  reporter: [['list'], ['allure-playwright']],
 });

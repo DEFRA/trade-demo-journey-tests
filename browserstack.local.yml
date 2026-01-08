@@ -12,35 +12,61 @@ run_settings:
   node_version: 20
 
 platforms:
+  - os: Windows
+    osVersion: 11
+    browserName: chrome
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: windows:chrome
+  - os: Windows
+    osVersion: 11
+    browserName: edge
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: windows:edge
+  - os: Windows
+    osVersion: 11
+    browserName: playwright-firefox
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: windows:firefox
   - os: OS X
     osVersion: Tahoe
     browserName: chrome
     browserVersion: latest
     playwrightConfigOptions:
-      testMatch:
-        - '/.*\.spec\.ts/'
       name: osx:chrome
   - os: OS X
     osVersion: Tahoe
     browserName: playwright-webkit
     browserVersion: latest
     playwrightConfigOptions:
-      testMatch:
-        - '/.*\.spec\.ts/'
       name: osx:webkit
   - os: OS X
     osVersion: Tahoe
     browserName: playwright-firefox
     browserVersion: latest
     playwrightConfigOptions:
-      testMatch:
-        - '/.*\.spec\.ts/'
       name: osx:firefox
+  - deviceName: Samsung Galaxy S24
+    browserName: chrome
+    osVersion: 14
+    playwrightConfigOptions:
+      name: android:samsungGalaxyS24:chrome
+  - deviceName: Samsung Galaxy Tab S9
+    browserName: chrome
+    osVersion: 13
+    playwrightConfigOptions:
+      name: android:samsungTabS9:chrome
+  - deviceName: Google Pixel 9
+    browserName: chrome
+    osVersion: 15
+    playwrightConfigOptions:
+      name: android:googlePixel9:chrome
 
 browserstackLocal: true
 browserStackLocalOptions:
-  forceLocal: false
-  #  binarypath: '/root/.browserstack/BrowserStackLocal'
+  forceLocal: true
   onlyAutomate: true
   verbose: true
 

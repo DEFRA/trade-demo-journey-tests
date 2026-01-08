@@ -36,6 +36,7 @@
     "zap:start": "/zap/zap.sh -daemon -host 0.0.0.0 -port 8080 -silent -nostdout -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true -config anticsrf.tokens.token.name=crumb",
     "setup:husky": "node -e \"try { (await import('husky')).default() } catch (e) { if (e.code !== 'ERR_MODULE_NOT_FOUND') throw e }\" --input-type module",
     "report": "allure generate allure-results --clean -o allure-report",
+    "report:open": "allure open allure-report",
     "report:publish": "npm run report; ./bin/publish-tests.sh"
   },
   "dependencies": {
