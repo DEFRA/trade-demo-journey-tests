@@ -53,6 +53,9 @@ RUN mkdir -p /root/.browserstack && \
     curl -L -o /root/.browserstack/BrowserStackLocal \
       https://www.browserstack.com/browserstack-local/BrowserStackLocal-linux-x64 && \
     chmod +x /root/.browserstack/BrowserStackLocal
+#RUN ls -la /root/.browserstack/BrowserStackLocal \
+#    /root/.browserstack/BrowserStackLocal --version || true
+
 
 
 ENTRYPOINT [ "./entrypoint.sh" ]
