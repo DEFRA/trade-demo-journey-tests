@@ -8,14 +8,7 @@ export default defineConfig({
   fullyParallel: false,
   retries: 2,
   workers: 1, // Adjust based on parallel execution needs (default: number of CPU cores, adjusted to 4 in CI for stability)
-  reporter: [
-    [
-      'allure-playwright',
-      {
-        resultsDir: 'allure-results',
-      },
-    ],
-  ],
+  reporter: [['list'], ['allure-playwright']],
   timeout: 5 * 60 * 1000, // Adjust based on E2E test duration (default: 30s, adjusted to 5m)
   expect: {
     timeout: 5 * 1000, // Adjust based on element appearance speed (default: 5s)

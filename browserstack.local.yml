@@ -66,8 +66,7 @@ platforms:
 
 browserstackLocal: true
 browserStackLocalOptions:
-  forceLocal: false
-#  binarypath: '/root/.browserstack/BrowserStackLocal'
+  forceLocal: true
   onlyAutomate: true
   verbose: true
 
