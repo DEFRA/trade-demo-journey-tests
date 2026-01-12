@@ -53,11 +53,11 @@ platforms:
     osVersion: 14
     playwrightConfigOptions:
       name: android:samsungGalaxyS24:chrome
-  - deviceName: Samsung Galaxy Tab S9
-    browserName: chrome
-    osVersion: 13
-    playwrightConfigOptions:
-      name: android:samsungTabS9:chrome
+#  - deviceName: Samsung Galaxy Tab S9
+#    browserName: chrome
+#    osVersion: 13
+#    playwrightConfigOptions:
+#      name: android:samsungTabS9:chrome
 #  - deviceName: Google Pixel 9
 #    browserName: chrome
 #    osVersion: 15
