@@ -18,18 +18,18 @@ platforms:
     browserVersion: latest
     playwrightConfigOptions:
       name: windows:chrome
-#  - os: Windows
-#    osVersion: 11
-#    browserName: edge
-#    browserVersion: latest
-#    playwrightConfigOptions:
-#      name: windows:edge
-#  - os: Windows
-#    osVersion: 11
-#    browserName: playwright-firefox
-#    browserVersion: latest
-#    playwrightConfigOptions:
-#      name: windows:firefox
+  - os: Windows
+    osVersion: 11
+    browserName: edge
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: windows:edge
+  - os: Windows
+    osVersion: 11
+    browserName: playwright-firefox
+    browserVersion: latest
+    playwrightConfigOptions:
+      name: windows:firefox
   - os: OS X
     osVersion: Tahoe
     browserName: chrome
