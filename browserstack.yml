@@ -48,11 +48,11 @@ platforms:
     browserVersion: latest
     playwrightConfigOptions:
       name: osx:firefox
-  - deviceName: Samsung Galaxy S24
-    browserName: chrome
-    osVersion: 14
-    playwrightConfigOptions:
-      name: android:samsungGalaxyS24:chrome
+#  - deviceName: Samsung Galaxy S24
+#    browserName: chrome
+#    osVersion: 14
+#    playwrightConfigOptions:
+#      name: android:samsungGalaxyS24:chrome
 #  - deviceName: Samsung Galaxy Tab S9
 #    browserName: chrome
 #    osVersion: 13
